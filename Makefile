@@ -13,9 +13,6 @@ test:
 deploy:
 	git push heroku main
 
-bind heroku:
-	heroku git:remote -a hexlet-rails-collective-blog
-
 lint: lint-code
 
 lint-code:
