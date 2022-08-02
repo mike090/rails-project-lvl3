@@ -28,6 +28,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'slim-rails'
 
+gem 'rollbar'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.4'
