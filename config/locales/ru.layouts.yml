@@ -1,0 +1,13 @@
+ru:
+  layouts:
+    application:
+      title: Доска объявлений
+    shared:
+      nav:
+        title: Доска объявлений
+        home: Главная
+        my_bulletins: Мои объявления
+        add_bulletin: Добавить
+        sign_in:  Войти
+        sign_out: Выйти
+        admin_area: Админка
