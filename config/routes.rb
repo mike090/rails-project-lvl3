@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   scope module: :web do
     namespace :admin do
       root 'bulletins#index'
-      resources :categiries
+      resources :categories, only: %i(index new create edit update delete)
       resources :bulletins
     end
 

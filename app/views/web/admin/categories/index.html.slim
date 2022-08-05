@@ -1,0 +1,17 @@
+h1.h2.mb-4
+  = t('categories')
+= link_to t('add_category'), new_admin_category_path
+.row.mt-2
+  table.table.table-bordless
+    tbody
+      - @categories.each do |category|
+        tr
+          td
+            = category.name
+          td
+            = link_to edit_admin_category_path(category), class: 'link-dark' do
+              span.me-4
+                i.fa-solid.fa-pen
+            = link_to admin_category_path(category), class: 'link-dark', method: :delete do
+              span.me-3
+                i.fa-solid.fa-trash-can

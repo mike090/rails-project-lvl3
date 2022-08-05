@@ -1,4 +1,5 @@
 setup:
+	cp -n .env.example .env || true
 	bin/setup
 
 start:
@@ -29,7 +30,7 @@ check: lint test
 
 ci-setup: setup
 	# cp -n .env.example .env || true
-  # bundle install --without production development
+  	# bundle install --without production development
 	# yarn install
 	# RAILS_ENV=test bin/rails db:prepare
 	# bin/rails db:fixtures:load
