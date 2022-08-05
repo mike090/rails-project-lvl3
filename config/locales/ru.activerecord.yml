@@ -1,0 +1,17 @@
+---
+ru:
+  activerecord:
+    models:
+      bulletin: Объявление
+    attributes:
+      user:
+        email: Email
+        name: Имя
+        password: Пароль
+      bulletin:
+        title: Заголовок
+        description: Содержание
+        category: Категория
+        image: Изображение
+      category:
+        name: Категория

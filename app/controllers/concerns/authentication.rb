@@ -14,6 +14,12 @@ module Authentication
       current_user.present?
     end
 
+    def require_authentication
+      return if signed_in?
+
+      redirect_to root_path, warning: t('global.flash.not_signed_in')
+    end
+
     helper_method :current_user, :signed_in?
   end
 end

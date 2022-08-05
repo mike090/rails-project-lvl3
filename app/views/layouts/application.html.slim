@@ -13,9 +13,18 @@ html.h-100
 
   body
     = render 'layouts/shared/nav'
-    == yield
+    = render 'layouts/shared/alerts'
 
-    footer.py-4.bg-dark
+    header.py-3.bg-light.border-bottom.mb-4
+      .container
+        .text-center.my-2
+          h1.h3.fw-border Welcome to bulletin board!
+
+    .container
+      .row
+        == yield
+
+    footer.py-4.bg-dark.mt-5
       .container
         p.m-0.text-center.text-white
           '&copy; @hexlet-student 2022

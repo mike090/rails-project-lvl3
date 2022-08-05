@@ -36,6 +36,16 @@ gem 'omniauth-github'
 
 gem 'omniauth-rails_csrf_protection'
 
+gem 'active_storage_validations'
+
+gem 'aws-sdk-s3'
+
+gem 'image_processing'
+
+gem 'flash_rails_messages'
+
+gem 'simple_form'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'dotenv-rails'
