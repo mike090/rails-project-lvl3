@@ -11,9 +11,9 @@ module Web::Admin
     def create
       @category = Category.new category_params
       if @category.save
-        redirect_to admin_categories_path, success: t('success')
+        redirect_to admin_categories_path, success: t('.success')
       else
-        flash[:warning] = t('fail')
+        flash[:warning] = t('.fail')
         render :new, status: :unprocessable_entity
       end
     end
@@ -23,26 +23,27 @@ module Web::Admin
     end
 
     def update
-      @category.find params[:id]
+      @category= Category.find params[:id]
       if @category.update category_params
-        redirect_to admin_categiries_path, success: t('success')
+        redirect_to admin_categories_path, success: t('.success')
       else
-        flash[:warning] = t('fail')
+        flash[:warning] = t('.fail')
         render :edit, status: :unprocessable_entity
       end
     end
 
-    def delete
+    def destroy
       @category = Category.find params[:id]
       begin
         @category.destroy
-        flash[:success] = t('success')
+        flash[:success] = t('.success')
       rescue ActiveRecord::DeleteRestrictionError
-        flash[:warning] = t('fail_has_bulletins')
-      rescue StandaedError
-        flash[:warning] = t('fail')
+        flash[:warning] = t('.fail_has_references')
+      rescue StandardError => e
+        flash[:warning] = t('.fail')
+        # flash[:warning] = e.full_message
       end
-      redirect_to admin_categiries_path
+      redirect_to admin_categories_path
     end
 
     private

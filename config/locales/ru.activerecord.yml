@@ -3,6 +3,7 @@ ru:
   activerecord:
     models:
       bulletin: Объявление
+      category: Категория
     attributes:
       user:
         email: Email

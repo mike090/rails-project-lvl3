@@ -1,0 +1,22 @@
+ru:
+  web:
+    admin:
+      categories:
+        index:
+          categories: Категории
+          add_category: Новая категория
+          destroy_confirmation: Подтвердите удаление категории %{category}
+        create:
+          success: Категория была успешно добавлена
+          fail: Категория не была сохранена
+        update:
+          success: Категория была успешно изменена
+          fail: Категория не была сохранена
+        new:
+          new_category: Новая категория
+        edit:
+          edit_category: Редактировать категорию
+        destroy:
+          success: Категория была успешно удалена
+          fail_has_references: Не удалось удалить категорию, так как она содержит объявления
+          fail: Ошибка при удалении категории
