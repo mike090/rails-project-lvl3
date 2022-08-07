@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web::Admin
   class BulletinsController < ApplicationController
     def index
@@ -5,19 +7,13 @@ module Web::Admin
     end
 
     def moderate
-      @bulletins = Bulletin.all.order: :created_at
+      @bulletins = Bulletin.all.order :created_at
     end
 
-    def publish
+    def publish; end
 
-    end
+    def reject; end
 
-    def reject
-      
-    end
-
-    def archive
-      
-    end
+    def archive; end
   end
 end

@@ -13,6 +13,6 @@ h1.h2.mb-4
               span
                 i.fa-solid.fa-pen
             = link_to admin_category_path(category), method: :delete, class: 'link-dark ms-3',
-              data: {confirm: t('.destroy_confirmation', category: category.name)} do
+              data: { confirm: t('.destroy_confirmation', category: category.name) } do
               span
                 i.fa-solid.fa-trash-can

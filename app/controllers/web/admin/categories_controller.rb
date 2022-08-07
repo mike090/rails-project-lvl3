@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web::Admin
   class CategoriesController < ApplicationController
     def index
@@ -23,7 +25,7 @@ module Web::Admin
     end
 
     def update
-      @category= Category.find params[:id]
+      @category = Category.find params[:id]
       if @category.update category_params
         redirect_to admin_categories_path, success: t('.success')
       else
@@ -41,7 +43,7 @@ module Web::Admin
         flash[:warning] = t('.fail_has_references')
       rescue StandardError => e
         flash[:warning] = t('.fail')
-        # flash[:warning] = e.full_message
+        flash[:warning] = e.message
       end
       redirect_to admin_categories_path
     end

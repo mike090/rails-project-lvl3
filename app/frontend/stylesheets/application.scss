@@ -1,1 +1,6 @@
 @import 'bootstrap/scss/bootstrap';
+
+.x-object-fit-cover {
+    -o-object-fit: cover;
+    object-fit: cover;
+}
