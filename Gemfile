@@ -50,6 +50,8 @@ gem 'rails-i18n', '~> 6.0' # For 6.x
 
 gem 'faker'
 
+gem 'pundit'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'dotenv-rails'
