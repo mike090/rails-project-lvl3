@@ -8,7 +8,8 @@ Rails.application.routes.draw do
       resources :bulletins
     end
 
-    resources :bulletins
+    resources :bulletins, only: %i[index new create show edit update]
+    resource :profile, only: :show
 
     root 'bulletins#index'
     post 'auth/:provider', to: 'auth#request', as: :auth_request

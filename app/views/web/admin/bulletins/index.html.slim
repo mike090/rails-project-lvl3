@@ -12,7 +12,7 @@ table.table.table-borderless
         td = '<state>'
         td = distance_of_time_in_words_to_now bulletin.created_at
         td
-          = link_to '#', class: 'link-dark' do
+          = link_to bulletin, class: 'link-dark' do
             span
               i.fa-solid.fa-eye title="#{t('show')}"
           = link_to '#', class: 'link-dark ms-3',

@@ -11,3 +11,4 @@ two:
 admin:
   name: admin
   email: admin@example.com
+  admin: true

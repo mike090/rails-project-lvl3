@@ -6,7 +6,8 @@
     - @bulletins.each do |bulletin|
       .col-3.pt-2
         .card.shadow-sm
-          = image_tag bulletin.image.variant(resize: '400x400^'), class: 'card-img-top x-object-fit-cover', height: 200
+          = image_tag bulletin.image.variant(resize: '400x400^') || 'bulletin_default.jpg', \
+            class: 'card-img-top x-object-fit-cover', height: 200
           .card-body
             = link_to bulletin do
               h5.card-title = bulletin.title

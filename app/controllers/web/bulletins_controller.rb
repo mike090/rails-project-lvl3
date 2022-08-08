@@ -3,7 +3,7 @@
 module Web
   class BulletinsController < ApplicationController
     def index
-      @bulletins = Bulletin.all.order :created_at
+      @bulletins = Bulletin.includes(image_attachment: :blob).all.order :created_at
     end
 
     def new
@@ -15,7 +15,7 @@ module Web
       require_authentication
       @bulletin = current_user.bulletins.build bulletin_params
       if @bulletin.save
-        redirect_to bulletins_path, success: t('.success')
+        redirect_to root_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :new, status: :unprocessable_entity
@@ -23,19 +23,21 @@ module Web
     end
 
     def show
-      @bulletin = Bulletin.includes(:user).find(params[:id])
+      @bulletin = Bulletin.includes(:user, image_attachment: [:blob]).find(params[:id])
     end
 
     def edit
       require_authentication
       @bulletin = Bulletin.find params[:id]
+      authorize @bulletin
     end
 
     def update
       require_authentication
       @bulletin = Bulletin.find params[:id]
+      authorize @bulletin
       if @bulletin.update bulletin_params
-        redirect_to bulletins_path, success: t('.success')
+        redirect_to root_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :edit, status: :unprocessable_entity

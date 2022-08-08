@@ -4,11 +4,8 @@
   hr
   .row
     .col-8
-      = image_tag @bulletin.image.variant(resize_to_limit: [300, 300]), class: 'img-thumbnail mb-2'
-      / = image_tag @bulletin.image.variant(resize: "400x400")
-      / = image_tag @bulletin.image.variant(crop: '300x200+0+0')
-      / = image_tag @bulletin.image.variant(resize: "400x300^", crop: '400x300+0+0')
-      / = image_tag @bulletin.image, height: 200, class: 'card-img-top x-object-fit-cover'
+      = image_tag @bulletin.image.variant(resize_to_limit: [300, 300]) || 'bulletin_default.jpg', \
+        class: 'img-thumbnail mb-2'
       p = @bulletin.description
     .col-4
       .card

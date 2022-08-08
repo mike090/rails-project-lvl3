@@ -4,7 +4,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    @user = user || GuestUser.new
+    @user = user
     @record = record
   end
 
@@ -49,15 +49,5 @@ class ApplicationPolicy
     private
 
     attr_reader :user, :scope
-  end
-
-  private
-
-  def guest?
-    @user.is_a? GuestUser
-  end
-
-  def admin?
-    @user.admin?
   end
 end

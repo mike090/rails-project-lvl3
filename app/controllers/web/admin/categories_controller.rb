@@ -8,6 +8,7 @@ module Web::Admin
     end
 
     def new
+      authorize Category
       @category = Category.new
     end
 

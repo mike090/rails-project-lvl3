@@ -13,6 +13,8 @@ yandex:
   region: ru-central1
   bucket: <%= ENV['S3_YANDEX_BUCKET'] %>
   endpoint: 'https://storage.yandexcloud.net'
+  upload:
+    cache_control: 'public, max-age=31536000'
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
