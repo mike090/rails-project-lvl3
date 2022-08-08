@@ -1,0 +1,7 @@
+ru:
+  web:
+    auth:
+      sing_out:
+        goodbye: Успешный выход
+      callback:
+        welcome: Успешный вход

@@ -5,13 +5,13 @@ module Web
     def callback
       user = find_or_create_user
       sign_in user
-      redirect_to root_path
+      redirect_to root_path, success: t('.welcome')
     end
 
     def sing_out
       session.delete :user_id
       @current_user = nil
-      redirect_to root_path
+      redirect_to root_path, success: t('.goodbye')
     end
 
     private

@@ -32,7 +32,7 @@ end
 users = User.all
 categories = Category.all
 
-30.times do
+300.times do
   bulletin = users.sample.bulletins.build(
     title: Faker::Lorem.sentence,
     description: Faker::Lorem.paragraph(sentence_count: 12),
