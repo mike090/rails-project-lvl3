@@ -7,3 +7,7 @@ one:
 two:
   name: second
   email: second@example.com
+
+admin:
+  name: admin
+  email: admin@example.com

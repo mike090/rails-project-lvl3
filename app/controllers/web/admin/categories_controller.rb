@@ -3,6 +3,7 @@
 module Web::Admin
   class CategoriesController < ApplicationController
     def index
+      authorize Category
       @categories = Category.all.order(:name)
     end
 
@@ -11,6 +12,7 @@ module Web::Admin
     end
 
     def create
+      authorize Category
       @category = Category.new category_params
       if @category.save
         redirect_to admin_categories_path, success: t('.success')
@@ -22,10 +24,12 @@ module Web::Admin
 
     def edit
       @category = Category.find params[:id]
+      authorize @category
     end
 
     def update
       @category = Category.find params[:id]
+      authorize @category
       if @category.update category_params
         redirect_to admin_categories_path, success: t('.success')
       else
@@ -36,6 +40,7 @@ module Web::Admin
 
     def destroy
       @category = Category.find params[:id]
+      authorize @category
       begin
         @category.destroy
         flash[:success] = t('.success')

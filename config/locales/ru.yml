@@ -10,3 +10,4 @@ ru:
   archive: В архив
   edit: Изменить
   delete: Удалить
+  permission_denied: Доступ запрещен!
