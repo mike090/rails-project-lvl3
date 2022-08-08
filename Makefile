@@ -13,6 +13,8 @@ test:
 
 deploy:
 	git push heroku main
+	heroku rake db:migrate
+	heroku open
 
 lint: lint-code
 

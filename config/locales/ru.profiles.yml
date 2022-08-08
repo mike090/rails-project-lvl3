@@ -1,0 +1,11 @@
+ru:
+  web:
+    profiles:
+      show:
+        actions: Действия
+        add_bulletin: Новое объявление
+        archive_confirmation: Отправить объявление в архив?
+        bulletin_title: Заголовок
+        my_bulletins: Мои объявления
+        publish_date: Дата публикации
+        state: Состояние
