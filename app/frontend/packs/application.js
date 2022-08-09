@@ -9,6 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import '../js/bootstrap_js_files.js'
 import '../stylesheets/application'
+import '../stylesheets/sidebars'
 import "@fortawesome/fontawesome-free/css/all"
 
 // require.context('../images', true)

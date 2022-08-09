@@ -15,7 +15,9 @@ module Web
       require_authentication
       @bulletin = current_user.bulletins.build bulletin_params
       if @bulletin.save
-        redirect_to root_path, success: t('.success')
+        # flash[:success] = t('.success')
+        # redirect_back fallback_location: root_path
+        redirect_to referer_path || root_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :new, status: :unprocessable_entity
@@ -37,7 +39,7 @@ module Web
       @bulletin = Bulletin.find params[:id]
       authorize @bulletin
       if @bulletin.update bulletin_params
-        redirect_to root_path, success: t('.success')
+        redirect_to referer_path || root_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :edit, status: :unprocessable_entity

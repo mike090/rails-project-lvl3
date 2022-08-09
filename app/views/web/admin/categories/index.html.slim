@@ -9,10 +9,17 @@ h1.h2.mb-4
           td
             = category.name
           td
-            = link_to edit_admin_category_path(category), class: 'link-dark' do
+            = link_to edit_admin_category_path(category), class: 'btn btn-sm btn-outline-dark me-2', title: t('edit') do
               span
-                i.fa-solid.fa-pen title="#{t('edit')}"
-            = link_to admin_category_path(category), method: :delete, class: 'link-dark ms-3',
-              data: { confirm: t('.destroy_confirmation', category: category.name) } do
-              span
-                i.fa-solid.fa-trash-can title="#{t('delete')}"
+                i.fa-solid.fa-pen
+
+            - if category.bulletins.exists?
+              = link_to '#', class: 'btn btn-sm btn-outline-dark disabled' do
+                span
+                  i.fa-solid.fa-trash-can
+            - else
+              = link_to admin_category_path(category), method: :delete,
+                class: 'btn btn-sm btn-outline-dark', title: t('delete'),
+                data: { confirm: t('.destroy_confirmation', category: category.name) } do
+                span
+                  i.fa-solid.fa-trash-can

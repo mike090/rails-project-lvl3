@@ -4,7 +4,7 @@ module Web
   class ProfilesController < ApplicationController
     def show
       require_authentication
-      @bulletins = current_user.bulletins
+      @bulletins = current_user.bulletins.order created_at: :desc
     end
   end
 end
