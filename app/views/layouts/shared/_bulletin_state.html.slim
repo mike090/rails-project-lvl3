@@ -1,0 +1,12 @@
+span
+  - case bulletin.state
+  - when 'draft'
+    i.fa-solid.fa-file-lines title="#{t bulletin.state}"
+  - when 'under_moderation'
+    i.fa-solid.fa-magnifying-glass title="#{t bulletin.state}"
+  - when 'published'
+    i.fa-solid.fa-circle-check title="#{t bulletin.state}"
+  - when :rejected
+    i.fa-solid.fa-replay title="#{t bulletin.state}"
+  - when :archived
+    i.fa-solid.fa-file-zipper title="#{t bulletin.state}"

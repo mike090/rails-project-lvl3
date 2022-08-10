@@ -8,7 +8,13 @@ Rails.application.routes.draw do
       resources :bulletins
     end
 
-    resources :bulletins, only: %i[index new create show edit update]
+    resources :bulletins, only: %i[index new create show edit update] do
+      member do
+        put 'to_moderation'
+        put 'archive'
+      end
+    end
+
     resource :profile, only: :show
 
     root 'bulletins#index'

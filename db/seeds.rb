@@ -32,12 +32,16 @@ end
 users = User.all
 categories = Category.all
 
-300.times do
-  bulletin = users.sample.bulletins.build(
-    title: Faker::Lorem.sentence,
-    description: Faker::Lorem.paragraph(sentence_count: 12),
-    category: categories.sample
-  )
-  bulletin.image.attach(io: File.open("test/fixtures/files/bulletin_#{rand 1..6}.jpg"), filename: 'bulletin_image.jpg')
-  bulletin.save
+unless Bulletin.any?
+  300.times do
+    bulletin = users.sample.bulletins.build(
+      title: Faker::Lorem.sentence,
+      description: Faker::Lorem.paragraph(sentence_count: 12),
+      category: categories.sample
+    )
+    bulletin.image.attach(io: File.open("test/fixtures/files/bulletin_#{rand 1..6}.jpg"), filename: 'bulletin_image.jpg')
+    bulletin.save
+  end
 end
+
+Bulletin.where(state: nil).update(state: :draft)

@@ -11,3 +11,8 @@ ru:
   edit: Редактировать
   delete: Удалить
   permission_denied: Доступ запрещен!
+  draft: Черновик
+  under_moderation: На модерации
+  published: Опубликовано
+  rejected: Требует исправления
+  archived: В архиве
