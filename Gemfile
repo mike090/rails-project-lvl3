@@ -54,6 +54,8 @@ gem 'pundit'
 
 gem 'aasm'
 
+gem 'referee', git: 'git@github.com:mike090/referee.git'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'dotenv-rails'
