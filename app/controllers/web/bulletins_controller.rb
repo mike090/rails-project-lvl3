@@ -3,7 +3,7 @@
 module Web
   class BulletinsController < ApplicationController
     def index
-      @bulletins = Bulletin.includes(image_attachment: :blob).all.order :created_at
+      @bulletins = Bulletin.published.includes(image_attachment: :blob).all.order :created_at
     end
 
     def new

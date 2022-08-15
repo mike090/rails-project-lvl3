@@ -32,4 +32,6 @@ class Bulletin < ApplicationRecord
       transitions to: :archived
     end
   end
+
+  scope :published, -> { where(state: :published) }
 end

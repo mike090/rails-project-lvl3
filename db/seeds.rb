@@ -44,4 +44,9 @@ unless Bulletin.any?
   end
 end
 
-Bulletin.where(state: nil).update(state: :draft)
+bulletin_states = Bulletin.aasm.states.map(&:name)
+
+Bulletin.all.each do |bulletin|
+  bulletin.state = bulletin_states.sample.to_s
+  bulletin.save
+end
