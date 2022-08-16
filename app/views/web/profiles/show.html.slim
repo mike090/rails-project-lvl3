@@ -4,26 +4,4 @@
   hr
 = link_to t('.add_bulletin'), new_bulletin_path
 .row.mt-2
-  table.table.table-borderless
-    thead
-      tr
-        th = t('.bulletin_title')
-        th = t('.state')
-        th = t('.publish_date')
-        th = t('.actions')
-    tbody
-      - @bulletins.each do |bulletin|
-        tr
-          td = bulletin.title
-          td = render 'layouts/shared/bulletin_state', bulletin: bulletin
-          td = distance_of_time_in_words_to_now bulletin.created_at
-          td
-            = link_to bulletin, class: 'link-dark' do
-              span
-                i.fa-solid.fa-eye title="#{t('show')}"
-            = link_to edit_bulletin_path(bulletin), class: 'link-dark ms-3' do
-              span
-                i.fa-solid.fa-pen title="#{t('edit')}"
-            = link_to '#', class: 'link-dark ms-3', data: { confirm: t('.archive_confirmation') } do
-              span
-                i.fa-solid.fa-box-archive title="#{t('archive')}"
+  = render 'web/shared/bulletins_table', bulletins: @bulletins
