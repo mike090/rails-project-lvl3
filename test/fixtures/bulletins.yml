@@ -5,9 +5,11 @@ one:
   description: MyText
   category: one
   user: one
+  state: 'archived'
 
 two:
   title: MyString
   description: MyText
   category: two
   user: two
+  state: 'archived'
