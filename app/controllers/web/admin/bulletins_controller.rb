@@ -3,11 +3,11 @@
 module Web::Admin
   class BulletinsController < ApplicationController
     def index
-      @bulletins = Bulletin.all.order :created_at
+      @bulletins = Bulletin.all.order created_at: :desc
     end
 
     def moderate
-      @bulletins = Bulletin.all.order :created_at
+      @bulletins = Bulletin.pending_moderation
     end
 
     def publish; end
