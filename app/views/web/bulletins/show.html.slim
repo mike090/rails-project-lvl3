@@ -11,3 +11,12 @@
       .card
         .card-body
           h1.h5.card-title = @bulletin.user.name
+  - if @draw_state
+    hr
+      .d-flex.justify-content-between
+        div
+          = "#{t('state')}: #{t(@bulletin.state)}"
+        - unless @actions.empty?
+          div
+            - bulletin_form_action_links(@bulletin, *@actions).each do |link|
+              = link

@@ -12,14 +12,13 @@ Rails.application.routes.draw do
         member do
           put 'publish'
           put 'reject'
-          put 'archive'
         end
       end
     end
 
     resources :bulletins, only: %i[index new create show edit update] do
       member do
-        put 'sent_to_moderation'
+        put 'sent_for_moderation'
         put 'archive'
       end
     end

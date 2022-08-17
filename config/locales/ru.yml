@@ -1,18 +1,22 @@
 ru:
-  category: Категория
-  categories: Категории
+  all: все
+  app_title: Доска объявлений
+  archive: В архив
+  archived: В архиве
   bulletin: Объявление
   bulletins: Объявления
-  all: все
-  on_moderation: на модерации
-  app_title: Доска объявлений
-  show: Просмотр
-  archive: В архив
-  edit: Редактировать
+  category: Категория
+  categories: Категории
   delete: Удалить
-  permission_denied: Доступ запрещен!
   draft: Черновик
-  under_moderation: На модерации
+  edit: Редактировать
+  on_moderation: на модерации
+  permission_denied: Доступ запрещен!
   published: Опубликовано
+  publish: Опубликовать
+  sent_for_moderation: Отправить на проверку
+  show: Просмотр
+  state: Состояние
+  reject: Вернуть для исправления
   rejected: Требует исправления
-  archived: В архиве
+  under_moderation: Ожидает проверку

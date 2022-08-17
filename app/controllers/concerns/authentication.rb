@@ -19,6 +19,10 @@ module Authentication
       !current_user.is_a? GuestUser
     end
 
+    def admin?
+      current_user.admin?
+    end
+
     def require_authentication
       return if signed_in?
 
@@ -30,6 +34,6 @@ module Authentication
       redirect_to direction, warning: t('global.flash.not_signed_in')
     end
 
-    helper_method :current_user, :signed_in?
+    helper_method :current_user, :signed_in?, :admin?
   end
 end

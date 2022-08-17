@@ -4,4 +4,4 @@
   hr
 = link_to t('.add_bulletin'), new_bulletin_path
 .row.mt-2
-  = render 'web/shared/bulletins_table', bulletins: @bulletins
+  = render 'web/shared/bulletins_table', bulletins: @bulletins, actions: bulletin_author_actions

@@ -13,10 +13,5 @@ h1.h2.mb-4
           td = link_to bulletin.title, bulletin
           td = distance_of_time_in_words_to_now bulletin.created_at
           td
-            = link_to bulletin, class: 'link-dark' do
-              span
-                i.fa-solid.fa-eye title="#{t('show')}"
-            = link_to '#', class: 'link-dark ms-3',
-              data: { confirm: t('.archive_confirmation') } do
-              span
-                i.fa-solid.fa-box-archive title="#{t('archive')}"
+            - bulletin_grid_action_links(bulletin, *bulletin_admin_actions).each do |link|
+              = link

@@ -18,7 +18,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'unauthenticated show success' do
-    get bulletin_path(bulletins(:one))
+    get bulletin_path(bulletins(:published))
     assert_response :success
   end
 
@@ -40,7 +40,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'authorized update' do
-    bulletin = Bulletin.all.sample
+    bulletin = bulletins :draft
     title = Faker::Lorem.sentence
     sign_in bulletin.user
     put bulletin_path(bulletin), params: {
@@ -57,7 +57,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
 
   test 'unauthorized edit ;)' do
     sign_in Struct.new(:name, :email).new('user', 'email@mail.io')
-    get edit_bulletin_path(bulletins(:one))
+    get edit_bulletin_path(bulletins(:draft))
     assert_redirected_to root_path
     assert flash[:warning]
   end

@@ -15,8 +15,6 @@ module Web
       require_authentication
       @bulletin = current_user.bulletins.build bulletin_params
       if @bulletin.save
-        # flash[:success] = t('.success')
-        # redirect_back fallback_location: root_path
         redirect_to referer_path || root_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
@@ -26,6 +24,11 @@ module Web
 
     def show
       @bulletin = Bulletin.includes(:user, image_attachment: [:blob]).find(params[:id])
+      @draw_state = bulletin_author?(@bulletin) || admin?
+      @actions = []
+      @actions += %i[publish reject archive] if admin?
+      @actions += %i[edit sent_for_moderation archive] if bulletin_author? @bulletin
+      @actions.uniq!
     end
 
     def edit
@@ -46,10 +49,39 @@ module Web
       end
     end
 
+    def sent_for_moderation
+      @bulletin = Bulletin.find params[:id]
+      authorize @bulletin
+      if @bulletin.sent_for_moderation!
+        redirect_to (request.referer || root_path), success: t('.success')
+      else
+        redirect_to (request.referer || root_path), success: t('.fail')
+      end
+    end
+
+    def archive
+      @bulletin = Bulletin.find params[:id]
+      authorize @bulletin
+      if @bulletin.archive!
+        redirect_to (request.referer || root_path), success: t('.success')
+      else
+        redirect_to (request.referer || root_path), success: t('.fail')
+      end
+    end
+
     private
 
     def bulletin_params
       params.require(:bulletin).permit(:title, :description, :category_id, :image)
     end
+
+    def bulletin_author?(bulletin, user = nil)
+      return false if current_user.is_a? GuestUser
+
+      user ||= current_user
+      bulletin.user_id == user.id
+    end
+
+    # helper_method :bulletin_author?
   end
 end
