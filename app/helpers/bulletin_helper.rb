@@ -2,10 +2,10 @@
 
 module BulletinHelper
   BULLETIN_STATE_ICONS = {
-    draft: 'fa-solid fa-file-lines',
+    draft: 'fa-solid fa-asterisk',
     under_moderation: 'fa-solid fa-magnifying-glass',
-    published: 'fa-solid fa-circle-check',
-    rejected: 'fa-solid fa-reply',
+    published: 'fa-solid fa-check',
+    rejected: 'fa-solid fa-rotate-left',
     archived: 'fa-solid fa-file-zipper'
   }.freeze
 
@@ -43,7 +43,7 @@ module BulletinHelper
   def draw_bulletin_state(bulletin)
     content_tag :span do
       state = bulletin.aasm.current_state
-      content_tag :i, '', class: BULLETIN_STATE_ICONS[state], title: t(state)
+      content_tag :i, '', class: "#{BULLETIN_STATE_ICONS[state]} fa-xl", title: t(state)
     end
   end
 
