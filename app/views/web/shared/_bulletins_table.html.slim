@@ -12,5 +12,5 @@ table.table.table-borderless
         td = draw_bulletin_state(bulletin)
         td = distance_of_time_in_words_to_now bulletin.created_at
         td
-          - bulletin_grid_action_links(bulletin, *bulletin_admin_actions).each do |link|
+          - bulletin_grid_action_links(bulletin, *actions).each do |link|
             = link
