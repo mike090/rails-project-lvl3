@@ -14,9 +14,10 @@ h1.h2.mb-4
                 i.fa-solid.fa-pen
 
             - if category.bulletins.exists?
-              = link_to '#', class: 'btn btn-sm btn-outline-dark disabled' do
-                span
-                  i.fa-solid.fa-trash-can
+              span title="#{t('.deletion_forbidden')}"
+                = link_to '#', class: 'btn btn-sm btn-outline-dark disabled' do
+                  span
+                    i.fa-solid.fa-trash-can
             - else
               = link_to admin_category_path(category), method: :delete,
                 class: 'btn btn-sm btn-outline-dark', title: t('delete'),

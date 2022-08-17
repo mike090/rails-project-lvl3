@@ -6,6 +6,7 @@ ru:
           categories: Категории
           add_category: Новая категория
           destroy_confirmation: Подтвердите удаление категории %{category}
+          deletion_forbidden: Удаление запрещено - в этой категории есть объявления
         create:
           success: Категория была успешно добавлена
           fail: Категория не была сохранена
