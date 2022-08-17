@@ -3,11 +3,13 @@
 module Web::Admin
   class BulletinsController < ApplicationController
     def index
-      @bulletins = Bulletin.all.order created_at: :desc
+      @ransack_query = Bulletin.ransack params[:query]
+      @bulletins = @ransack_query.result.order created_at: :desc
+      @bulletin_state_options = Bulletin.aasm.states.map { |state| [t(state.name), state.name.to_s] }
     end
 
     def moderate
-      @bulletins = Bulletin.pending_moderation
+      @bulletins = Bulletin.under_moderation.order created_at: :desc
     end
 
     def publish

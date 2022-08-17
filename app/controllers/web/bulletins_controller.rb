@@ -3,7 +3,12 @@
 module Web
   class BulletinsController < ApplicationController
     def index
-      @bulletins = Bulletin.published.includes(image_attachment: :blob).all.order :created_at
+      @ransack_query = Bulletin.ransack params[:query]
+      @bulletins = @ransack_query.result
+                                 .published
+                                 .includes(image_attachment: :blob)
+                                 .order(created_at: :desc)
+      @category_options = Category.all.map { |category| [category.name, category.id] }
     end
 
     def new
@@ -24,6 +29,7 @@ module Web
 
     def show
       @bulletin = Bulletin.includes(:user, image_attachment: [:blob]).find(params[:id])
+      authorize @bulletin
       @draw_state = bulletin_author?(@bulletin) || admin?
       @actions = []
       @actions += %i[publish reject archive] if admin?
@@ -81,7 +87,5 @@ module Web
       user ||= current_user
       bulletin.user_id == user.id
     end
-
-    # helper_method :bulletin_author?
   end
 end

@@ -2,6 +2,9 @@
   h1.h2.mb-4
     = t('.bulletins')
   hr
+  .p-3.bg-light
+    = render 'web/shared/search_form', url: bulletins_path, select_options: @category_options, \
+          query: @ransack_query, select_label: t('.select_category'), select_key: :category_id_eq
   .row.mt-2
     - @bulletins.each do |bulletin|
       .col-3.pt-2

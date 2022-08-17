@@ -1,0 +1,13 @@
+= search_form_for query, url: url do |f|
+  .row.my-2
+    .col-5
+      .form-group.mb-3.string.required.q_title_cont
+        = f.search_field :title_cont, class: 'form-control'
+        small.form-text.text-muted = t('.search_by_title')
+    .col-4
+      .form-group.mb-3.select.required.q_category_id_eq
+        = f.select select_key, select_options, { include_blank: true }, { class: 'form-control' }
+        small.form-text.text-muted = select_label
+    .col-3
+      = f.submit t('.search'), class: 'btn btn-primary me-2'
+      = link_to t('.reset'), url_for, class: 'btn btn-outline-primary'

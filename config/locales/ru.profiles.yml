@@ -9,3 +9,4 @@ ru:
         my_bulletins: Мои объявления
         publish_date: Дата публикации
         state: Состояние
+        select_state: По состоянию

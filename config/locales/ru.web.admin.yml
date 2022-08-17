@@ -15,3 +15,4 @@ ru:
           actions: Управление
         index:
           bulletins: Все объявления
+          select_state: По состоянию

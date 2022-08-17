@@ -4,7 +4,9 @@ module Web
   class ProfilesController < ApplicationController
     def show
       require_authentication
-      @bulletins = current_user.bulletins.order created_at: :desc
+      @ransack_query = current_user.bulletins.ransack params[:query]
+      @bulletins = @ransack_query.result.order created_at: :desc
+      @bulletin_state_options = Bulletin.aasm.states.map { |state| [t(state.name), state.name.to_s] }
     end
   end
 end

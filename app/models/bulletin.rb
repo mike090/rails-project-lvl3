@@ -32,7 +32,4 @@ class Bulletin < ApplicationRecord
       transitions to: :archived
     end
   end
-
-  scope :published, -> { where(state: :published).order(created_at: :desc) }
-  scope :pending_moderation, -> { where(state: :under_moderation).order(created_at: :desc) }
 end

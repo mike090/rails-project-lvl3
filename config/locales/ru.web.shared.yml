@@ -6,3 +6,7 @@ ru:
         state: Состояние
         publish_date: Дата
         actions: Управление
+      search_form:
+        search: Искать
+        reset: Сброс
+        search_by_title: Искать по названию объявления

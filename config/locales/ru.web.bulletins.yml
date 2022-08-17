@@ -13,6 +13,7 @@ ru:
         fail: Объявление не было сохранено
       index:
         bulletins: Объявления
+        select_category: Выбрать категорию
       destroy:
         success: Объявление было успешно удалено
         fail: Ошибка при удалении объявления / %{message}
