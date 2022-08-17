@@ -1,5 +1,4 @@
 ru:
-  all: все
   app_title: Доска объявлений
   archive: В архив
   archived: В архиве
@@ -10,7 +9,6 @@ ru:
   delete: Удалить
   draft: Черновик
   edit: Редактировать
-  on_moderation: на модерации
   permission_denied: Доступ запрещен!
   published: Опубликовано
   publish: Опубликовать

@@ -1,7 +1,7 @@
 ul.nav.flex-column.nav-pills
   li.nav-item
-    = link_to t('categories'), admin_categories_path, class: 'nav-link link-dark active'
+    = menu_item_link t('.on_moderation'), admin_root_path, class: 'nav-link link-dark'
   li.nav-item
-    = link_to t('all'), admin_bulletins_path, class: 'nav-link link-dark'
+    = menu_item_link t('.all_bulletins'), admin_bulletins_path, class: 'nav-link link-dark'
   li.nav-item
-    = link_to t('on_moderation'), moderate_admin_bulletins_path, class: 'nav-link link-dark'
+    = menu_item_link t('categories'), admin_categories_path, class: 'nav-link link-dark'

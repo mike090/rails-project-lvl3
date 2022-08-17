@@ -1,0 +1,8 @@
+ru:
+  web:
+    shared:
+      bulletins_table:
+        bulletin_title: Объявление
+        state: Состояние
+        publish_date: Дата
+        actions: Управление

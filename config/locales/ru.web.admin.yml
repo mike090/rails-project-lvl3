@@ -1,0 +1,17 @@
+ru:
+  web:
+    admin:
+      bulletins:
+        publish:
+          success: Объявление опубликовано
+          fail: Ошибка при отправке на публикацию
+        reject:
+          success: Объявление возвращено для исправления
+          fail: Ошибка при отправке на исправление
+        moderate:
+          pending_publication: Ожидают проверку
+          title: Объявление
+          publish_date: Дата
+          actions: Управление
+        index:
+          bulletins: Все объявления

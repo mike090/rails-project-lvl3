@@ -10,7 +10,7 @@ h1.h2.mb-4
     tbody
       - @bulletins.each do |bulletin|
         tr
-          td = link_to bulletin.title, bulletin
+          td = bulletin.title
           td = distance_of_time_in_words_to_now bulletin.created_at
           td
             - bulletin_grid_action_links(bulletin, *bulletin_admin_actions).each do |link|

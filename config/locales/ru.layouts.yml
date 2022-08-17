@@ -11,3 +11,6 @@ ru:
         sign_in:  Войти
         sign_out: Выйти
         admin_area: Админка
+      admin_menu:
+        all_bulletins: Все объявления
+        on_moderation: Ожидают проверку

@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   scope module: :web do
     namespace :admin do
-      root 'categories#index'
+      root 'bulletins#moderate'
       resources :categories, only: %i[index new create edit update destroy]
       resources :bulletins, only: %i[index] do
         collection do
