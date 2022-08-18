@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       member do
         put 'sent_for_moderation'
         put 'archive'
+        patch 'sent_for_moderation'
+        patch 'archive'
       end
     end
 
