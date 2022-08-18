@@ -56,6 +56,10 @@ gem 'aasm'
 
 gem 'ransack'
 
+gem 'kaminari'
+
+gem 'bootstrap5-kaminari-views'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'dotenv-rails'

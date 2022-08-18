@@ -8,6 +8,7 @@ module Web
                                  .published
                                  .includes(image_attachment: :blob)
                                  .order(created_at: :desc)
+                                 .page(params[:page]).per(8)
       @category_options = Category.all.map { |category| [category.name, category.id] }
     end
 

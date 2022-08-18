@@ -4,7 +4,7 @@ module Web::Admin
   class CategoriesController < ApplicationController
     def index
       authorize Category
-      @categories = Category.all.order(:name)
+      @categories = Category.all.order(:name).page(params[:page])
     end
 
     def new

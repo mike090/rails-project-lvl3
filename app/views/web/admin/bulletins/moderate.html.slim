@@ -15,3 +15,4 @@ h1.h2.mb-4
           td
             - bulletin_grid_action_links(bulletin, *bulletin_admin_actions).each do |link|
               = link
+= paginate @bulletins, theme: 'bootstrap-5'

@@ -24,3 +24,4 @@ h1.h2.mb-4
                 data: { confirm: t('.destroy_confirmation', category: category.name) } do
                 span
                   i.fa-solid.fa-trash-can
+= paginate @categories, theme: 'bootstrap-5'
