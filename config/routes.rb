@@ -12,6 +12,8 @@ Rails.application.routes.draw do
         member do
           put 'publish'
           put 'reject'
+          patch 'publish'
+          patch 'reject'
         end
       end
     end
