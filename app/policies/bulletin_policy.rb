@@ -33,6 +33,10 @@ class BulletinPolicy < ApplicationPolicy
     @user.is_a? User
   end
 
+  def admin_index?
+    admin?
+  end
+
   private
 
   def bulletin

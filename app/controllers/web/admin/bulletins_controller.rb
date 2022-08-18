@@ -3,12 +3,14 @@
 module Web::Admin
   class BulletinsController < ApplicationController
     def index
+      authorize Bulletin, :admin_index?
       @ransack_query = Bulletin.ransack params[:query]
       @bulletins = @ransack_query.result.order(created_at: :desc).page(params[:page])
       @bulletin_state_options = Bulletin.aasm.states.map { |state| [t(state.name), state.name.to_s] }
     end
 
     def moderate
+      authorize Bulletin, :admin_index?
       @bulletins = Bulletin.under_moderation.order(created_at: :desc).page(params[:page])
     end
 
