@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 module CategoryHelper
-
-  CATEGORY_ACTIONS = %i[edit delete]
-
   CATEGORY_ACTIONS_DATA = {
     admin_edit: {
       path: :edit_admin_category_path,
@@ -14,7 +11,7 @@ module CategoryHelper
       method: :delete,
       icon: 'fa-solid fa-trash-can'
     }
-  }
+  }.freeze
 
   def category_grid_action_links(category, *actions)
     policy = policy(category)
