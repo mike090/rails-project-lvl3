@@ -1,0 +1,21 @@
+.mb-4
+  h1.h2.mb-4
+    = bulletin.title
+  hr
+  .row
+    .col-8
+      = image_tag bulletin.image.variant(resize_to_limit: [300, 300]) || 'bulletin_default.jpg', \
+        class: 'img-thumbnail mb-2'
+      p = bulletin.description
+    .col-4
+      .card
+        .card-body
+          h1.h5.card-title = bulletin.user.name
+  - if actions
+    hr
+      .d-flex.justify-content-between
+        div
+          = "#{t('state')}: #{draw_bulletin_show_state bulletin}"
+        div
+          - bulletin_form_action_links(bulletin, *actions).each do |link|
+            = link

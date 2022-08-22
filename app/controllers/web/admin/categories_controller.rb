@@ -3,17 +3,14 @@
 module Web::Admin
   class CategoriesController < ApplicationController
     def index
-      authorize Category
       @categories = Category.all.order(:name).page(params[:page])
     end
 
     def new
-      authorize Category
       @category = Category.new
     end
 
     def create
-      authorize Category
       @category = Category.new category_params
       if @category.save
         redirect_to referer_path || admin_categories_path, success: t('.success')
@@ -42,14 +39,10 @@ module Web::Admin
     def destroy
       @category = Category.find params[:id]
       authorize @category
-      begin
-        @category.destroy
+      if @category.destroy
         flash[:success] = t('.success')
-      rescue ActiveRecord::DeleteRestrictionError
-        flash[:warning] = t('.fail_has_references')
-      rescue StandardError => e
+      else
         flash[:warning] = t('.fail')
-        flash[:warning] = e.message
       end
       redirect_to request.referer || admin_categories_path
     end

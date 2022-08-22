@@ -8,8 +8,6 @@ module Authentication
   included do
     rescue_from AuthenticationRequeredError, with: :authentication_required
 
-    private
-
     def current_user
       @current_user ||= User.find_by id: session[:user_id]
       @current_user ||= GuestUser.new
@@ -17,10 +15,6 @@ module Authentication
 
     def signed_in?
       !current_user.is_a? GuestUser
-    end
-
-    def admin?
-      current_user.admin?
     end
 
     def require_authentication
@@ -34,6 +28,6 @@ module Authentication
       redirect_to direction, warning: t('global.flash.not_signed_in')
     end
 
-    helper_method :current_user, :signed_in?, :admin?
+    helper_method :current_user, :signed_in?
   end
 end

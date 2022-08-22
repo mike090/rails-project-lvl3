@@ -25,7 +25,7 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
       }
     end
     unauthorized_action_test do
-      put admin_category_path(categories(:one)), params: {
+      patch admin_category_path(categories(:one)), params: {
         category: {
           title: 'test category'
         }
@@ -42,5 +42,18 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     delete admin_category_path(categories(:empty))
     assert_redirected_to admin_categories_path
     assert flash[:success]
+  end
+
+  test 'should create category' do
+    sign_in users(:admin)
+    category_name = Faker::Lorem.sentence
+    assert_difference('Category.count', 1) do
+      post admin_categories_path, params: {
+        category: {
+          name: category_name
+        }
+      }
+    end
+    assert Category.find_by(name: category_name)
   end
 end

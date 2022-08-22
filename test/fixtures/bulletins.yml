@@ -28,7 +28,7 @@ rejected:
   user: one
   state: 'rejected'
 
-two:
+archived:
   title: MyString
   description: MyText
   category: two

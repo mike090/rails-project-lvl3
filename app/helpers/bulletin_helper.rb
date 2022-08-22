@@ -9,6 +9,9 @@ module BulletinHelper
     archived: 'fa-solid fa-file-zipper'
   }.freeze
 
+  BULLETIN_AUTHOR_ACTIONS = %i[show edit sent_for_moderation archive].freeze
+  BULLETIN_ADMIN_ACTIONS = %i[show publish reject archive].freeze
+
   BULLETIN_ACTIONS_DATA = {
     show: {
       path: :bulletin_path,
@@ -20,83 +23,78 @@ module BulletinHelper
     },
     sent_for_moderation: {
       path: :sent_for_moderation_bulletin_path,
-      method: :put,
+      method: :patch,
       icon: 'fa-solid fa-circle-check'
-    },
-    publish: {
-      path: :publish_admin_bulletin_path,
-      method: :put,
-      icon: 'fa-solid fa-circle-check'
-    },
-    reject: {
-      path: :reject_admin_bulletin_path,
-      method: :put,
-      icon: 'fa-solid fa-reply'
     },
     archive: {
       path: :archive_bulletin_path,
-      method: :put,
+      method: :patch,
+      icon: 'fa-solid fa-box-archive'
+    },
+    admin_show: {
+      path: :admin_bulletin_path,
+      icon: 'fa-solid fa-eye'
+    },
+    admin_publish: {
+      path: :publish_admin_bulletin_path,
+      method: :patch,
+      icon: 'fa-solid fa-circle-check'
+    },
+    admin_reject: {
+      path: :reject_admin_bulletin_path,
+      method: :patch,
+      icon: 'fa-solid fa-reply'
+    },
+    admin_archive: {
+      path: :archive_admin_bulletin_path,
+      method: :patch,
       icon: 'fa-solid fa-box-archive'
     }
   }.freeze
 
-  def draw_bulletin_state(bulletin)
+  def draw_bulletin_grid_state(bulletin)
     content_tag :span do
       state = bulletin.aasm.current_state
       content_tag :i, '', class: "#{BULLETIN_STATE_ICONS[state]} fa-xl", title: t(state)
     end
   end
 
-  def bulletin_admin_actions
-    %i[show publish reject archive]
-  end
-
-  def bulletin_author_actions
-    %i[show edit sent_for_moderation archive]
+  def draw_bulletin_show_state(bulletin)
+    t bulletin.state
   end
 
   def bulletin_grid_action_links(bulletin, *actions)
-    policy = Pundit.policy(current_user, bulletin)
-    actions = actions.index_with { |action| policy.public_send "#{action}?" }
+    policy = policy(bulletin)
+    actions = actions.index_with { |action| policy.public_send "#{delete_ns_prefix(action)}?" }
 
     actions.map do |action, enabled|
       path = public_send(BULLETIN_ACTIONS_DATA[action][:path], bulletin)
       http_method = BULLETIN_ACTIONS_DATA[action][:method] || :get
       icon_class = BULLETIN_ACTIONS_DATA[action][:icon]
-
-      if enabled
-        link_to path, class: 'btn btn-sm btn-outline-dark me-1',
-                      title: t(action.to_s), 'data-method' => http_method do
-          content_tag :span do
-            content_tag :i, '', class: icon_class
-          end
-        end
-      else
-        content_tag :span, title: t(action.to_s) do
-          link_to '#', class: 'btn btn-sm btn-outline-dark me-1 disabled' do
-            content_tag :span do
-              content_tag :i, '', class: icon_class
-            end
-          end
-        end
-      end
+      title = t(delete_ns_prefix(action))
+      icon_action_link enabled, path, http_method, title, icon_class
     end
   end
 
   def bulletin_form_action_links(bulletin, *actions)
-    policy = Pundit.policy(current_user, bulletin)
-    actions = actions.select { |action| policy.public_send "#{action}?" }
+    actions = actions.select do |action|
+      policy(bulletin).public_send "#{delete_ns_prefix(action)}?"
+    end
 
     actions.map do |action|
       path = public_send(BULLETIN_ACTIONS_DATA[action][:path], bulletin)
       http_method = BULLETIN_ACTIONS_DATA[action][:method] || :get
       icon_class = BULLETIN_ACTIONS_DATA[action][:icon]
 
-      link_to path, class: 'btn btn-outline-dark me-2', 'data-method' => http_method do
-        (content_tag :span, class: 'me-2' do
-          content_tag :i, '', class: icon_class
-        end) + t(action)
-      end
+      button_action_link path, http_method, t(delete_ns_prefix(action)), icon_class
     end
+  end
+
+  def bulletin_admin_actions
+    wrap_actions(*BULLETIN_ADMIN_ACTIONS)
+  end
+
+  def bulletin_author_actions
+    wrap_actions(*BULLETIN_AUTHOR_ACTIONS)
   end
 end

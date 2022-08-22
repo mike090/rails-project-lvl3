@@ -8,36 +8,19 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-categories = [
-  'Личные вещи',
-  'Транспорт',
-  'Работа',
-  'Для дома и дачи',
-  'Недвижимость',
-  'Хобби и отдых',
-  'Электроника',
-  'Животные'
-]
+10.times { Category.create name: Faker::Restaurant.type } if Category.count < 10
 
-unless Category.any?
-  Category.create(
-    categories.map do |category|
-      { name: category }
-    end
-  )
-end
-
-7.times { User.create name: Faker::Name.name, email: Faker::Internet.email } if User.count == 1
+7.times { User.create name: Faker::Name.name, email: Faker::Internet.email } if User.count < 7
 
 users = User.all
 categories = Category.all
 bulletin_states = Bulletin.aasm.states.map(&:name)
 
-unless Bulletin.any?
+if Bulletin.count < 300
   300.times do
     bulletin = users.sample.bulletins.build(
-      title: Faker::Lorem.sentence,
-      description: Faker::Lorem.paragraph(sentence_count: 12),
+      title: Faker::Restaurant.name,
+      description: Faker::Restaurant.description,
       category: categories.sample,
       state: bulletin_states.sample.to_s
     )

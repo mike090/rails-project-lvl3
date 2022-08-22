@@ -4,16 +4,17 @@ Rails.application.routes.draw do
   scope module: :web do
     namespace :admin do
       root 'bulletins#moderate'
+
       resources :categories, only: %i[index new create edit update destroy]
-      resources :bulletins, only: %i[index] do
+
+      resources :bulletins, only: %i[index show] do
         collection do
           get 'moderate'
         end
         member do
-          put 'publish'
-          put 'reject'
           patch 'publish'
           patch 'reject'
+          patch 'archive'
         end
       end
     end

@@ -11,8 +11,6 @@ module Web
     # rubocop:enable Rails/LexicallyScopedActionFilter
     add_flash_types :success, :warning, :danger, :info
 
-    private
-
     def set_referer_path
       session[:referer_path] = request.referer
     end

@@ -16,3 +16,6 @@ ru:
         index:
           bulletins: Все объявления
           select_state: По состоянию
+        archive:
+          success: Объявление отправлено в архив
+          fail: Ошибка при отправке в архив

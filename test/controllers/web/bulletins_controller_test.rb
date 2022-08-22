@@ -43,7 +43,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     bulletin = bulletins :draft
     title = Faker::Lorem.sentence
     sign_in bulletin.user
-    put bulletin_path(bulletin), params: {
+    patch bulletin_path(bulletin), params: {
       bulletin: {
         title: title,
         description: 'Bulletin content',
@@ -60,5 +60,13 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     get edit_bulletin_path(bulletins(:draft))
     assert_redirected_to root_path
     assert flash[:warning]
+  end
+
+  test 'should_archive' do
+    bulletin = bulletins :published
+    sign_in bulletin.user
+    patch archive_bulletin_path bulletin
+    bulletin.reload
+    assert { bulletin.aasm.current_state == :archived }
   end
 end

@@ -3,13 +3,12 @@
 module Web
   class BulletinsController < ApplicationController
     def index
-      @ransack_query = Bulletin.ransack params[:query]
+      @ransack_query = policy_scope(Bulletin).ransack params[:query]
       @bulletins = @ransack_query.result
-                                 .published
                                  .includes(image_attachment: :blob)
                                  .order(created_at: :desc)
                                  .page(params[:page]).per(8)
-      @category_options = Category.all.map { |category| [category.name, category.id] }
+      @category_select_options = Category.all.map { |category| [category.name, category.id] }
     end
 
     def new
@@ -31,11 +30,7 @@ module Web
     def show
       @bulletin = Bulletin.includes(:user, image_attachment: [:blob]).find(params[:id])
       authorize @bulletin
-      @draw_state = bulletin_author?(@bulletin) || admin?
-      @actions = []
-      @actions += %i[publish reject archive] if admin?
-      @actions += %i[edit sent_for_moderation archive] if bulletin_author? @bulletin
-      @actions.uniq!
+      @required_actions = %i[edit sent_for_moderation archive] if bulletin_author? @bulletin
     end
 
     def edit

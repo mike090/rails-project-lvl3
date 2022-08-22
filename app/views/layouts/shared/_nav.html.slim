@@ -16,7 +16,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
           li.nav-item
             = link_to t('.add_bulletin'), new_bulletin_path, class: 'nav-link'
       ul.navbar-nav.ms-auto.mb-2.mb-lg-0
-        - if current_user.admin?
+        - if admin?
           li.nav-item
             = link_to t('.admin_area'), admin_root_path, class: 'nav-link'
         - if signed_in?

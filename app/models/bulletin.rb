@@ -8,8 +8,8 @@ class Bulletin < ApplicationRecord
 
   has_one_attached :image
 
-  validates :title, presence: true, length: { minimum: 2 }
-  validates :description, presence: true, length: { minimum: 15 }
+  validates :title, presence: true, length: { maximum: 50 }
+  validates :description, presence: true, length: { maximum: 1000 }
   validates :image, attached: true, size: { less_than: 5.megabytes }, content_type: %i[png jpg jpeg]
 
   aasm column: 'state' do

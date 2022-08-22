@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-class GuestUser
-  def admin?
-    false
-  end
-end
+# rubocop:disable Lint/EmptyClass
+class GuestUser; end
+# rubocop:enable Lint/EmptyClass

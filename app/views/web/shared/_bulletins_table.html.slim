@@ -9,7 +9,7 @@ table.table.table-borderless
     - bulletins.each do |bulletin|
       tr
         td = bulletin.title
-        td = draw_bulletin_state(bulletin)
+        td = draw_bulletin_grid_state(bulletin)
         td = distance_of_time_in_words_to_now bulletin.created_at
         td
           - bulletin_grid_action_links(bulletin, *actions).each do |link|
