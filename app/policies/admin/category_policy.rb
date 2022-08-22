@@ -5,7 +5,7 @@ class Admin::CategoryPolicy < Admin::ApplicationPolicy
     !category.bulletins.exists?
   end
 
-  def edit?
+  def update?
     true
   end
 

@@ -56,4 +56,17 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     end
     assert Category.find_by(name: category_name)
   end
+
+  test 'should_update_category' do
+    category = categories :one
+    category_name = Faker::Lorem.sentence
+    sign_in users(:admin)
+    patch admin_category_path(category), params: {
+      category: {
+        name: category_name
+      }
+    }
+    category.reload
+    assert { category.name == category_name }
+  end
 end
