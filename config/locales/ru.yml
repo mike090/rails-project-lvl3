@@ -6,7 +6,7 @@ ru:
   bulletins: Объявления
   category: Категория
   categories: Категории
-  delete: Удалить
+  destroy: Удалить
   draft: Черновик
   edit: Редактировать
   permission_denied: Доступ запрещен!

@@ -9,19 +9,6 @@ h1.h2.mb-4
           td
             = category.name
           td
-            = link_to edit_admin_category_path(category), class: 'btn btn-sm btn-outline-dark me-2', title: t('edit') do
-              span
-                i.fa-solid.fa-pen
-
-            - if category.bulletins.exists?
-              span title="#{t('.deletion_forbidden')}"
-                = link_to '#', class: 'btn btn-sm btn-outline-dark disabled' do
-                  span
-                    i.fa-solid.fa-trash-can
-            - else
-              = link_to admin_category_path(category), method: :delete,
-                class: 'btn btn-sm btn-outline-dark', title: t('delete'),
-                data: { confirm: t('.destroy_confirmation', category: category.name) } do
-                span
-                  i.fa-solid.fa-trash-can
+            - category_grid_action_links(category, *wrap_actions(:edit, :destroy)).each do |link|
+              = link
 = paginate @categories, theme: 'bootstrap-5'

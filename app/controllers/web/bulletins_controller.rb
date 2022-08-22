@@ -2,6 +2,8 @@
 
 module Web
   class BulletinsController < ApplicationController
+    after_action :set_referer_path, only: %i[new edit]
+
     def index
       @ransack_query = policy_scope(Bulletin).ransack params[:query]
       @bulletins = @ransack_query.result
