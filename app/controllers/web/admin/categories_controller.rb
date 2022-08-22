@@ -13,7 +13,7 @@ module Web::Admin
     def create
       @category = Category.new category_params
       if @category.save
-        redirect_to referer_path || admin_categories_path, success: t('.success')
+        redirect_to admin_categories_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :new, status: :unprocessable_entity
@@ -29,7 +29,7 @@ module Web::Admin
       @category = Category.find params[:id]
       authorize @category
       if @category.update category_params
-        redirect_to referer_path || admin_categories_path, success: t('.success')
+        redirect_to admin_categories_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :edit, status: :unprocessable_entity
@@ -44,7 +44,7 @@ module Web::Admin
       else
         flash[:warning] = t('.fail')
       end
-      redirect_to request.referer || admin_categories_path
+      redirect_to admin_categories_path
     end
 
     private
