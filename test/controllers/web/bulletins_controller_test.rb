@@ -35,7 +35,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
         image: fixture_file_upload('bulletin_default.jpg', 'image/png')
       }
     }
-    assert_redirected_to root_path
+    assert_redirected_to profile_path
     assert(Bulletin.find_by(title: title, user: user, category: category))
   end
 

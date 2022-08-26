@@ -2,7 +2,7 @@
 
 module Web
   class BulletinsController < ApplicationController
-    after_action :set_referer_path, only: %i[new edit]
+    after_action :set_referer_path, only: %i[edit]
 
     def index
       @ransack_query = policy_scope(Bulletin).ransack params[:query]
@@ -22,7 +22,7 @@ module Web
       require_authentication
       @bulletin = current_user.bulletins.build bulletin_params
       if @bulletin.save
-        redirect_to referer_path || root_path, success: t('.success')
+        redirect_to profile_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :new, status: :unprocessable_entity
