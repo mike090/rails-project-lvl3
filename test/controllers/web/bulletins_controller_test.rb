@@ -51,7 +51,8 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
         image: fixture_file_upload('bulletin_default.jpg', 'image/png')
       }
     }
-    assert { Bulletin.find(bulletin.id).title == title }
+    bulletin.reload
+    assert { bulletin.title == title }
     assert_redirected_to root_path
   end
 
@@ -67,6 +68,14 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     sign_in bulletin.user
     patch archive_bulletin_path bulletin
     bulletin.reload
-    assert { bulletin.aasm.current_state == :archived }
+    assert bulletin.archived?
+  end
+
+  test 'can send for moderation' do
+    bulletin = bulletins :draft
+    sign_in bulletin.user
+    patch send_for_moderation_bulletin_path bulletin
+    bulletin.reload
+    assert bulletin.under_moderation?
   end
 end

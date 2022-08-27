@@ -11,11 +11,11 @@
       .card
         .card-body
           h1.h5.card-title = bulletin.user.name
-  - if actions
+  - unless actions.empty?
     hr
       .d-flex.justify-content-between
         div
-          = "#{t('state')}: #{draw_bulletin_show_state bulletin}"
+          = "#{t('state')}: #{t(bulletin.state)}"
         div
           - bulletin_form_action_links(bulletin, *actions).each do |link|
             = link

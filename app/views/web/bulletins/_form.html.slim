@@ -5,5 +5,7 @@
   = f.input :title
   = f.input :description
   = f.association :category
+  - if bulletin.image.attached?
+    = image_tag bulletin.image.variant(resize_to_limit: [100, 100]), class: 'img-thumbnail mb-2'
   = f.input :image, input_html: { accept: 'image/png,image/jpg,image/jpeg' }
   = f.button :submit, class: 'btn btn-primary mt-4'

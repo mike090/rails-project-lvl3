@@ -3,15 +3,15 @@
 module Admin
   class BulletinPolicy < ApplicationPolicy
     def archive?
-      bulletin.aasm.may_fire_event? :archive
+      bulletin.may_archive?
     end
 
     def publish?
-      bulletin.aasm.may_fire_event? :publish
+      bulletin.may_publish?
     end
 
     def reject?
-      bulletin.aasm.may_fire_event? :reject
+      bulletin.may_reject?
     end
 
     private

@@ -22,11 +22,7 @@ module Authorization
       nil
     end
 
-    def admin?
-      return false unless current_user.is_a? User
-
-      current_user.admin?
-    end
+    delegate :admin?, to: :current_user
 
     private
 

@@ -7,7 +7,7 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
     patch publish_admin_bulletin_path(bulletin)
     assert_redirected_to root_path
     bulletin.reload
-    assert { bulletin.aasm.current_state == :published }
+    assert bulletin.published?
   end
 
   test 'should reject' do
@@ -16,7 +16,7 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
     patch reject_admin_bulletin_path(bulletin)
     assert_redirected_to root_path
     bulletin.reload
-    assert { bulletin.aasm.current_state == :rejected }
+    assert bulletin.rejected?
   end
 
   test 'should archive' do
@@ -25,6 +25,18 @@ class Web::Admin::BulletinsControllerTest < ActionDispatch::IntegrationTest
     patch archive_admin_bulletin_path(bulletin)
     assert_redirected_to root_path
     bulletin.reload
-    assert { bulletin.aasm.current_state == :archived }
+    assert bulletin.archived?
+  end
+
+  test 'should index' do
+    sign_in users :admin
+    get admin_bulletins_path
+    assert_response :success
+  end
+
+  test 'should show moderation' do
+    sign_in users :admin
+    get admin_root_path
+    assert_response :success
   end
 end

@@ -21,9 +21,7 @@ Rails.application.routes.draw do
 
     resources :bulletins, only: %i[index new create show edit update] do
       member do
-        put 'sent_for_moderation'
-        put 'archive'
-        patch 'sent_for_moderation'
+        patch 'send_for_moderation'
         patch 'archive'
       end
     end
@@ -34,6 +32,6 @@ Rails.application.routes.draw do
 
     post 'auth/:provider', to: 'auth#request', as: :auth_request
     get 'auth/:provider/callback', to: 'auth#callback', as: :callback_auth
-    delete 'auth/sing_out', as: :sing_out
+    delete 'auth/sign_out', as: :sign_out
   end
 end

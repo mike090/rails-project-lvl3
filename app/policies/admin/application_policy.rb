@@ -3,8 +3,6 @@
 module Admin
   class ApplicationPolicy < ::ApplicationPolicy
     def admin?
-      return false unless @user.is_a? User
-
       @user.admin?
     end
 

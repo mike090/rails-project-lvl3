@@ -14,12 +14,12 @@ module Web
     end
 
     def new
-      require_authentication
+      authorize Bulletin
       @bulletin = current_user.bulletins.build
     end
 
     def create
-      require_authentication
+      authorize Bulletin
       @bulletin = current_user.bulletins.build bulletin_params
       if @bulletin.save
         redirect_to profile_path, success: t('.success')
@@ -32,17 +32,15 @@ module Web
     def show
       @bulletin = Bulletin.includes(:user, image_attachment: [:blob]).find(params[:id])
       authorize @bulletin
-      @required_actions = %i[edit sent_for_moderation archive] if bulletin_author? @bulletin
+      @required_actions = %i[edit send_for_moderation archive] if bulletin_author? @bulletin
     end
 
     def edit
-      require_authentication
       @bulletin = Bulletin.find params[:id]
       authorize @bulletin
     end
 
     def update
-      require_authentication
       @bulletin = Bulletin.find params[:id]
       authorize @bulletin
       if @bulletin.update bulletin_params
@@ -53,10 +51,10 @@ module Web
       end
     end
 
-    def sent_for_moderation
+    def send_for_moderation
       @bulletin = Bulletin.find params[:id]
       authorize @bulletin
-      if @bulletin.sent_for_moderation!
+      if @bulletin.send_for_moderation!
         redirect_to (request.referer || root_path), success: t('.success')
       else
         redirect_to (request.referer || root_path), success: t('.fail')
@@ -79,11 +77,8 @@ module Web
       params.require(:bulletin).permit(:title, :description, :category_id, :image)
     end
 
-    def bulletin_author?(bulletin, user = nil)
-      return false if current_user.is_a? GuestUser
-
-      user ||= current_user
-      bulletin.user_id == user.id
+    def bulletin_author?(bulletin)
+      bulletin.user_id == current_user.id
     end
   end
 end

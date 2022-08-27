@@ -41,20 +41,19 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     action_success_test { get new_admin_category_path }
     delete admin_category_path(categories(:empty))
     assert_redirected_to admin_categories_path
-    assert flash[:success]
+    assert_nil Category.find_by id: categories(:empty).id
   end
 
   test 'should create category' do
     sign_in users(:admin)
     category_name = Faker::Lorem.sentence
-    assert_difference('Category.count', 1) do
-      post admin_categories_path, params: {
-        category: {
-          name: category_name
-        }
+    post admin_categories_path params: {
+      category: {
+        name: category_name
       }
-    end
+    }
     assert Category.find_by(name: category_name)
+    assert_redirected_to admin_categories_path
   end
 
   test 'should_update_category' do
@@ -68,5 +67,6 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     }
     category.reload
     assert { category.name == category_name }
+    assert_redirected_to admin_categories_path
   end
 end

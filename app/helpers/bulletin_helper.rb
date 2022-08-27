@@ -9,7 +9,7 @@ module BulletinHelper
     archived: 'fa-solid fa-file-zipper'
   }.freeze
 
-  BULLETIN_AUTHOR_ACTIONS = %i[show edit sent_for_moderation archive].freeze
+  BULLETIN_AUTHOR_ACTIONS = %i[show edit send_for_moderation archive].freeze
   BULLETIN_ADMIN_ACTIONS = %i[show publish reject archive].freeze
 
   BULLETIN_ACTIONS_DATA = {
@@ -21,8 +21,8 @@ module BulletinHelper
       path: :edit_bulletin_path,
       icon: 'fa-solid fa-pen'
     },
-    sent_for_moderation: {
-      path: :sent_for_moderation_bulletin_path,
+    send_for_moderation: {
+      path: :send_for_moderation_bulletin_path,
       method: :patch,
       icon: 'fa-solid fa-circle-check'
     },
@@ -59,18 +59,15 @@ module BulletinHelper
     end
   end
 
-  def draw_bulletin_show_state(bulletin)
-    t bulletin.state
-  end
-
   def bulletin_grid_action_links(bulletin, *actions)
     policy = policy(bulletin)
     actions = actions.index_with { |action| policy.public_send "#{delete_ns_prefix(action)}?" }
 
     actions.map do |action, enabled|
-      path = public_send(BULLETIN_ACTIONS_DATA[action][:path], bulletin)
-      http_method = BULLETIN_ACTIONS_DATA[action][:method] || :get
-      icon_class = BULLETIN_ACTIONS_DATA[action][:icon]
+      action_data = BULLETIN_ACTIONS_DATA[action]
+      path = public_send(action_data[:path], bulletin)
+      http_method = action_data[:method] || :get
+      icon_class = action_data[:icon]
       title = t(delete_ns_prefix(action))
       icon_action_link enabled, path, http_method, title, icon_class
     end
@@ -82,9 +79,10 @@ module BulletinHelper
     end
 
     actions.map do |action|
-      path = public_send(BULLETIN_ACTIONS_DATA[action][:path], bulletin)
-      http_method = BULLETIN_ACTIONS_DATA[action][:method] || :get
-      icon_class = BULLETIN_ACTIONS_DATA[action][:icon]
+      action_data = BULLETIN_ACTIONS_DATA[action]
+      path = public_send(action_data[:path], bulletin)
+      http_method = action_data[:method] || :get
+      icon_class = action_data[:icon]
 
       button_action_link path, http_method, t(delete_ns_prefix(action)), icon_class
     end

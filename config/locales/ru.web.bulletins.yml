@@ -17,7 +17,7 @@ ru:
       destroy:
         success: Объявление было успешно удалено
         fail: Ошибка при удалении объявления / %{message}
-      sent_for_moderation:
+      send_for_moderation:
         success: Объявление отправлено на проверку
         fail: Ошибка при отправке на проверку
       archive:
