@@ -1,7 +1,7 @@
 ru:
   web:
     auth:
-      sing_out:
+      sign_out:
         goodbye: Успешный выход
       callback:
         welcome: Успешный вход
