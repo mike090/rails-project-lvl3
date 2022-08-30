@@ -22,7 +22,7 @@ module Web
       authorize Bulletin
       @bulletin = current_user.bulletins.build bulletin_params
       if @bulletin.save
-        redirect_to profile_path, success: t('.success')
+        redirect_to @bulletin, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :new, status: :unprocessable_entity
@@ -36,15 +36,15 @@ module Web
     end
 
     def edit
-      @bulletin = Bulletin.find params[:id]
+      @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
     end
 
     def update
-      @bulletin = Bulletin.find params[:id]
+      @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
       if @bulletin.update bulletin_params
-        redirect_to referer_path || root_path, success: t('.success')
+        redirect_to referer_path || profile_path, success: t('.success')
       else
         flash[:warning] = t('.fail')
         render :edit, status: :unprocessable_entity
@@ -52,22 +52,24 @@ module Web
     end
 
     def send_for_moderation
-      @bulletin = Bulletin.find params[:id]
+      @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
-      if @bulletin.send_for_moderation!
-        redirect_to (request.referer || root_path), success: t('.success')
+      if @bulletin.may_send_for_moderation?
+        @bulletin.send_for_moderation!
+        redirect_to (request.referer || profile_path), success: t('.success')
       else
-        redirect_to (request.referer || root_path), success: t('.fail')
+        redirect_to (request.referer || profile_path), warning: t('.fail', t(@bulletin.state))
       end
     end
 
     def archive
-      @bulletin = Bulletin.find params[:id]
+      @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
-      if @bulletin.archive!
-        redirect_to (request.referer || root_path), success: t('.success')
+      if @bulletin.may_archive?
+        @bulletin.archive!
+        redirect_to (request.referer || profile_path), success: t('.success')
       else
-        redirect_to (request.referer || root_path), success: t('.fail')
+        redirect_to (request.referer || profile_path), warning: t('.fail')
       end
     end
 

@@ -10,11 +10,11 @@ class BulletinPolicy < ApplicationPolicy
   end
 
   def send_for_moderation?
-    author? && bulletin.may_send_for_moderation?
+    author?
   end
 
   def archive?
-    author? && bulletin.may_archive?
+    author?
   end
 
   def update?
@@ -37,7 +37,7 @@ class BulletinPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.where state: :published
+      scope.where(state: :published).or(scope.where(user_id: user.id))
     end
   end
 end

@@ -60,8 +60,7 @@ module BulletinHelper
   end
 
   def bulletin_grid_action_links(bulletin, *actions)
-    policy = policy(bulletin)
-    actions = actions.index_with { |action| policy.public_send "#{delete_ns_prefix(action)}?" }
+    actions = actions.index_with { |action| allow?(delete_ns_prefix(action), bulletin) }
 
     actions.map do |action, enabled|
       action_data = BULLETIN_ACTIONS_DATA[action]
@@ -75,7 +74,7 @@ module BulletinHelper
 
   def bulletin_form_action_links(bulletin, *actions)
     actions = actions.select do |action|
-      policy(bulletin).public_send "#{delete_ns_prefix(action)}?"
+      allow?(delete_ns_prefix(action), bulletin)
     end
 
     actions.map do |action|

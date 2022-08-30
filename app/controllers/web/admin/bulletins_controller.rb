@@ -19,31 +19,32 @@ module Web::Admin
 
     def publish
       @bulletin = Bulletin.find params[:id]
-      authorize @bulletin
-      complete_action @bulletin.publish!
+      if @bulletin.may_publish?
+        @bulletin.publish!
+        redirect_back fallback_location: admin_root_path, success: t('.success')
+      else
+        redirect_back fallback_location: admin_root_path, warning: t('.fail', status: t(@bulletin.state))
+      end
     end
 
     def reject
       @bulletin = Bulletin.find params[:id]
-      authorize @bulletin
-      complete_action @bulletin.reject!
+      if @bulletin.may_reject?
+        @bulletin.reject!
+        redirect_back fallback_location: admin_root_path, success: t('.success')
+      else
+        redirect_back fallback_location: admin_root_path, warning: t('.fail', status: t(@bulletin.state))
+      end
     end
 
     def archive
       @bulletin = Bulletin.find params[:id]
-      authorize @bulletin
-      complete_action @bulletin.archive!
-    end
-
-    private
-
-    def complete_action(success)
-      if success
-        flash[:success] = t('.success')
+      if @bulletin.may_archive?
+        @bulletin.archive!
+        redirect_back fallback_location: admin_root_path, success: t('.success')
       else
-        flash[:danger] = t('.fail')
+        redirect_back fallback_location: admin_root_path, warning: t('.fail', status: t(@bulletin.state))
       end
-      redirect_back fallback_location: root_path
     end
   end
 end

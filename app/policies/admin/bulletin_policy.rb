@@ -3,21 +3,15 @@
 module Admin
   class BulletinPolicy < ApplicationPolicy
     def archive?
-      bulletin.may_archive?
+      true
     end
 
     def publish?
-      bulletin.may_publish?
+      true
     end
 
     def reject?
-      bulletin.may_reject?
-    end
-
-    private
-
-    def bulletin
-      @record
+      true
     end
   end
 end

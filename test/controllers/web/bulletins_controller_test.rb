@@ -35,8 +35,9 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
         image: fixture_file_upload('bulletin_default.jpg', 'image/png')
       }
     }
-    assert_redirected_to profile_path
-    assert(Bulletin.find_by(title: title, user: user, category: category))
+    bulletin = Bulletin.find_by(title: title, user: user, category: category)
+    assert bulletin
+    assert_redirected_to bulletin_path bulletin
   end
 
   test 'authorized update' do
@@ -53,14 +54,14 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     }
     bulletin.reload
     assert { bulletin.title == title }
-    assert_redirected_to root_path
+    assert_redirected_to profile_path
   end
 
   test 'unauthorized edit ;)' do
     sign_in Struct.new(:name, :email).new('user', 'email@mail.io')
-    get edit_bulletin_path(bulletins(:draft))
-    assert_redirected_to root_path
-    assert flash[:warning]
+    assert_raises ActiveRecord::RecordNotFound do
+      get edit_bulletin_path(bulletins(:draft))
+    end
   end
 
   test 'should_archive' do
@@ -69,6 +70,7 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     patch archive_bulletin_path bulletin
     bulletin.reload
     assert bulletin.archived?
+    assert_redirected_to profile_path
   end
 
   test 'can send for moderation' do
@@ -77,5 +79,6 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     patch send_for_moderation_bulletin_path bulletin
     bulletin.reload
     assert bulletin.under_moderation?
+    assert_redirected_to profile_path
   end
 end

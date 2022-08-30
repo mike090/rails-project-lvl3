@@ -5,7 +5,7 @@ module Web
     include ::Authentication
     include ::Authorization
 
-    add_flash_types :success, :warning, :danger, :info
+    add_flash_types :success, :warning
 
     def set_referer_path
       session[:referer_path] = request.referer
@@ -14,5 +14,23 @@ module Web
     def referer_path
       session.delete :referer_path
     end
+
+    def allow?(action, resource)
+      policy(resource).public_send("#{action}?") && (
+        resource.nil? || resource.is_a?(Class) || assm_allow?(action, resource)
+      )
+    end
+
+    private
+
+    def assm_allow?(action, resource)
+      return true unless resource.class.include? AASM
+
+      return true unless action.in?(resource.class.aasm.events.map(&:name))
+
+      resource.aasm.may_fire_event? action
+    end
+
+    helper_method :allow?
   end
 end

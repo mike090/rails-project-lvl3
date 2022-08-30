@@ -27,12 +27,11 @@ module Authorization
     private
 
     def find_policy_class(record)
-      policy_name = if record.nil?
+      record_class = record.is_a?(Class) ? record : record.class
+      policy_name = if record_class == NilClass
                       'ApplicationPolicy'
-                    elsif record.is_a? Class
-                      "#{record.name}Policy"
                     else
-                      "#{record.class.name}Policy"
+                      "#{record_class.name}Policy"
                     end
       (policy_namespace || Object).const_get policy_name
     end
