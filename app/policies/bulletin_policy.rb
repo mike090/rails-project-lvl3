@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class BulletinPolicy < ApplicationPolicy
-
   def create?
     signed_in?
   end
