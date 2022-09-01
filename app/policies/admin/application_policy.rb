@@ -5,13 +5,5 @@ module Admin
     def admin?
       @user.admin?
     end
-
-    def index?
-      true
-    end
-
-    def show?
-      true
-    end
   end
 end

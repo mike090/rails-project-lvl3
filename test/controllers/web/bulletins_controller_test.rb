@@ -81,4 +81,13 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     assert bulletin.under_moderation?
     assert_redirected_to profile_path
   end
+
+  test 'send for moderation archived bulletin' do
+    archived_bulletin = bulletins :archived
+    sign_in archived_bulletin.user
+    patch send_for_moderation_bulletin_path archived_bulletin
+    assert_redirected_to profile_path
+    archived_bulletin.reload
+    assert { archived_bulletin.aasm.current_state == :archived }
+  end
 end

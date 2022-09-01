@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class BulletinPolicy < ApplicationPolicy
-  def index?
-    true
-  end
 
   def create?
     signed_in?
@@ -18,7 +15,7 @@ class BulletinPolicy < ApplicationPolicy
   end
 
   def update?
-    author? && bulletin.state_in?(:draft, :rejected)
+    author? && state_in?(:draft, :rejected)
   end
 
   def show?
@@ -31,13 +28,17 @@ class BulletinPolicy < ApplicationPolicy
     @record
   end
 
+  def state_in?(*states)
+    bulletin.aasm.current_state.in? states
+  end
+
   def author?
     bulletin.user_id == @user.id
   end
 
   class Scope < Scope
     def resolve
-      scope.where(state: :published).or(scope.where(user_id: user.id))
+      scope.where(state: :published)
     end
   end
 end

@@ -16,9 +16,7 @@ module Web
     end
 
     def allow?(action, resource)
-      policy(resource).public_send("#{action}?") && (
-        resource.nil? || resource.is_a?(Class) || assm_allow?(action, resource)
-      )
+      policy(resource).public_send("#{action}?") && assm_allow?(action, resource)
     end
 
     private

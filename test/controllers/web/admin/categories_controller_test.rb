@@ -39,6 +39,10 @@ class Web::Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     action_success_test { get admin_categories_path }
     action_success_test { get edit_admin_category_path(categories(:one)) }
     action_success_test { get new_admin_category_path }
+  end
+
+  test 'delete empty category' do
+    sign_in users(:admin)
     delete admin_category_path(categories(:empty))
     assert_redirected_to admin_categories_path
     assert_nil Category.find_by id: categories(:empty).id

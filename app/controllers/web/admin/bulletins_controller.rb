@@ -10,7 +10,7 @@ module Web::Admin
 
     def show
       @bulletin = Bulletin.find params[:id]
-      @required_actions = %i[publish reject archive]
+      @requested_actions = %i[publish reject archive]
     end
 
     def moderate
@@ -23,7 +23,7 @@ module Web::Admin
         @bulletin.publish!
         redirect_back fallback_location: admin_root_path, success: t('.success')
       else
-        redirect_back fallback_location: admin_root_path, warning: t('.fail', status: t(@bulletin.state))
+        redirect_back fallback_location: admin_root_path, warning: t('.fail', state: t(@bulletin.state))
       end
     end
 
@@ -33,7 +33,7 @@ module Web::Admin
         @bulletin.reject!
         redirect_back fallback_location: admin_root_path, success: t('.success')
       else
-        redirect_back fallback_location: admin_root_path, warning: t('.fail', status: t(@bulletin.state))
+        redirect_back fallback_location: admin_root_path, warning: t('.fail', state: t(@bulletin.state))
       end
     end
 
@@ -43,7 +43,7 @@ module Web::Admin
         @bulletin.archive!
         redirect_back fallback_location: admin_root_path, success: t('.success')
       else
-        redirect_back fallback_location: admin_root_path, warning: t('.fail', status: t(@bulletin.state))
+        redirect_back fallback_location: admin_root_path, warning: t('.fail', state: t(@bulletin.state))
       end
     end
   end

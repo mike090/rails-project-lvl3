@@ -2,7 +2,7 @@
 
 class Admin::CategoryPolicy < Admin::ApplicationPolicy
   def destroy?
-    !category.bulletins.exists?
+    category.bulletins.empty?
   end
 
   def update?

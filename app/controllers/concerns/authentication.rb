@@ -14,7 +14,7 @@ module Authentication
     end
 
     def signed_in?
-      !current_user.is_a? GuestUser
+      current_user.is_a? User
     end
 
     def require_authentication

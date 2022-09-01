@@ -14,11 +14,13 @@ module Web
     end
 
     def new
+      require_authentication
       authorize Bulletin
       @bulletin = current_user.bulletins.build
     end
 
     def create
+      require_authentication
       authorize Bulletin
       @bulletin = current_user.bulletins.build bulletin_params
       if @bulletin.save
@@ -32,15 +34,17 @@ module Web
     def show
       @bulletin = Bulletin.includes(:user, image_attachment: [:blob]).find(params[:id])
       authorize @bulletin
-      @required_actions = %i[edit send_for_moderation archive] if bulletin_author? @bulletin
+      @requested_actions = %i[edit send_for_moderation archive] if bulletin_author?
     end
 
     def edit
+      require_authentication
       @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
     end
 
     def update
+      require_authentication
       @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
       if @bulletin.update bulletin_params
@@ -52,24 +56,26 @@ module Web
     end
 
     def send_for_moderation
+      require_authentication
       @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
       if @bulletin.may_send_for_moderation?
         @bulletin.send_for_moderation!
         redirect_to (request.referer || profile_path), success: t('.success')
       else
-        redirect_to (request.referer || profile_path), warning: t('.fail', t(@bulletin.state))
+        redirect_to (request.referer || profile_path), warning: t('.fail', state: t(@bulletin.state))
       end
     end
 
     def archive
+      require_authentication
       @bulletin = current_user.bulletins.find params[:id]
       authorize @bulletin
       if @bulletin.may_archive?
         @bulletin.archive!
         redirect_to (request.referer || profile_path), success: t('.success')
       else
-        redirect_to (request.referer || profile_path), warning: t('.fail')
+        redirect_to (request.referer || profile_path), warning: t('.fail', state: t(@bulletin.state))
       end
     end
 
@@ -79,8 +85,8 @@ module Web
       params.require(:bulletin).permit(:title, :description, :category_id, :image)
     end
 
-    def bulletin_author?(bulletin)
-      bulletin.user_id == current_user.id
+    def bulletin_author?
+      @bulletin.user_id == current_user.id
     end
   end
 end

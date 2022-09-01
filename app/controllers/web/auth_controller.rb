@@ -6,7 +6,7 @@ module Web
       user_info = request.env['omniauth.auth'].info
       user = User.find_or_initialize_by email: user_info.email.downcase
       user.update! name: user_info.name
-      self.current_user = user
+      save_current_user(user)
       redirect_to root_path, success: t('.welcome')
     end
 
@@ -18,7 +18,7 @@ module Web
 
     private
 
-    def current_user=(user)
+    def save_current_user(user)
       session[:user_id] = user.id
       @current_user = user
     end
