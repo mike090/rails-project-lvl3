@@ -13,6 +13,7 @@ h1.h2.mb-4
           td = bulletin.title
           td = distance_of_time_in_words_to_now bulletin.created_at
           td
-            - bulletin_grid_action_links(bulletin, *bulletin_admin_actions).each do |link|
-              = link
-= paginate @bulletins, theme: 'bootstrap-5'
+            - @resource_actions.each do |action|
+              = icon_action_link(action,
+                url_for(action: action, id: bulletin.id, only_path: true),
+                enabled: allow?(action, bulletin))

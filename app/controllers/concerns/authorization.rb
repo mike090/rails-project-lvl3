@@ -41,6 +41,6 @@ module Authorization
       redirect_to direction, warning: t('global.flash.not_authorized')
     end
 
-    helper_method :policy_namespace, :admin?
+    helper_method :admin?
   end
 end

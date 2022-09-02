@@ -11,11 +11,12 @@
       .card
         .card-body
           h1.h5.card-title = bulletin.user.name
-  - unless actions.empty?
+  - if actions
     hr
       .d-flex.justify-content-between
         div
           = "#{t('state')}: #{t(bulletin.state)}"
         div
-          - bulletin_form_action_links(bulletin, *actions).each do |link|
-            = link
+          - actions.select { |action| allow? action, bulletin }.each do |action, url_options|
+            = button_action_link(action,
+              url_for(action: action, id: bulletin.id, only_path: true, **(url_options || {})))

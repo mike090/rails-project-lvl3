@@ -4,6 +4,7 @@ module Web::Admin
   class CategoriesController < ApplicationController
     def index
       @categories = Category.all.order(:name).page(params[:page])
+      @resource_actions = %i[edit destroy]
     end
 
     def new

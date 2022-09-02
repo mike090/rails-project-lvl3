@@ -2,7 +2,28 @@
 
 module ApplicationHelper
   GRID_LINK_CLASS = 'btn btn-sm btn-outline-dark me-1'
+
   BUTTON_LINK_CLASS = 'btn btn-outline-dark me-2'
+
+  ACTIONS_ICONS = {
+    show: 'fa-solid fa-eye',
+    edit: 'fa-solid fa-pen',
+    send_for_moderation: 'fa-solid fa-circle-check',
+    archive: 'fa-solid fa-box-archive',
+    publish: 'fa-solid fa-circle-check',
+    reject: 'fa-solid fa-reply',
+    destroy: 'fa-solid fa-trash-can'
+  }.freeze
+
+  ACTIONS_HTTP_METODS = {
+    show: :get,
+    edit: :get,
+    send_for_moderation: :patch,
+    archive: :patch,
+    publish: :patch,
+    reject: :patch,
+    destroy: :delete
+  }.freeze
 
   def menu_item_link(title, path, **options)
     active = 'active' if request.path == path
@@ -10,40 +31,41 @@ module ApplicationHelper
     link_to title, path, **options
   end
 
-  private
-
-  def add_ns_prefix(action)
-    prefix = policy_namespace.nil? ? '' : policy_namespace.name.downcase
-    [prefix.split('::'), action].flatten.join('_').to_sym
-  end
-
-  def delete_ns_prefix(wrapped_action)
-    if policy_namespace.nil?
-      wrapped_action
-    else
-      (wrapped_action.to_s.split('_') - policy_namespace.name.downcase.split('::')).join('_').to_sym
-    end
-  end
-
-  def wrap_actions(*actions)
-    actions.map { |action| add_ns_prefix action }
-  end
-
-  def icon_action_link(enabled, path, http_method, title, icon)
-    link_class = GRID_LINK_CLASS
+  def icon_action_link(action, path,
+                       title: t(action),
+                       http_method: ACTIONS_HTTP_METODS[action],
+                       link_class: GRID_LINK_CLASS,
+                       enabled: true)
     link_class += ' disabled' unless enabled
     content_tag :span, title: title do
       link_to path, class: link_class, 'data-method' => http_method do
-        content_tag :i, '', class: icon
+        content_tag :i, '', class: ACTIONS_ICONS[action]
       end
     end
   end
 
-  def button_action_link(path, http_method, title, icon)
-    link_to path, class: BUTTON_LINK_CLASS, 'data-method' => http_method do
+  def button_action_link(action, path,
+                         title: t(action),
+                         http_method: ACTIONS_HTTP_METODS[action],
+                         link_class: BUTTON_LINK_CLASS)
+    link_to path, class: link_class, 'data-method' => http_method do
       (content_tag :span, class: 'me-2' do
-        content_tag :i, '', class: icon
+        content_tag :i, '', class: ACTIONS_ICONS[action]
       end) + title
     end
+  end
+
+  def allow?(action, resource)
+    policy(resource).public_send("#{action}?") && aasm_allow?(action, resource)
+  end
+
+  private
+
+  def aasm_allow?(action, resource)
+    return true unless resource.class.include? AASM
+
+    return true unless action.in?(resource.class.aasm.events.map(&:name))
+
+    resource.aasm.may_fire_event? action
   end
 end

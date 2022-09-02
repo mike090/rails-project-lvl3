@@ -9,6 +9,9 @@ h1.h2.mb-4
           td
             = category.name
           td
-            - category_grid_action_links(category, *wrap_actions(:edit, :destroy)).each do |link|
-              = link
+            - @resource_actions.each do |action, url_options|
+              = icon_action_link(action,
+                url_for(action: action, id: category.id, only_path: true, **(url_options || {})),
+                enabled: allow?(action, category))
+
 = paginate @categories, theme: 'bootstrap-5'

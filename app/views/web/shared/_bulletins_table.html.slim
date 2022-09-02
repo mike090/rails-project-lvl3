@@ -12,5 +12,7 @@ table.table.table-borderless
         td = draw_bulletin_grid_state(bulletin)
         td = distance_of_time_in_words_to_now bulletin.created_at
         td
-          - bulletin_grid_action_links(bulletin, *actions).each do |link|
-            = link
+          - actions.each do |action, url_options|
+            = icon_action_link(action,
+              url_for(action: action, id: bulletin.id, only_path: true, **(url_options || {})),
+              enabled: allow?(action, bulletin))

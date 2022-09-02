@@ -88,6 +88,6 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     patch send_for_moderation_bulletin_path archived_bulletin
     assert_redirected_to profile_path
     archived_bulletin.reload
-    assert { archived_bulletin.aasm.current_state == :archived }
+    assert { archived_bulletin.archived? }
   end
 end

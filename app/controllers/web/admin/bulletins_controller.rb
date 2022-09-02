@@ -6,15 +6,17 @@ module Web::Admin
       @ransack_query = Bulletin.ransack params[:query]
       @bulletins = @ransack_query.result.order(created_at: :desc).page(params[:page])
       @bulletin_state_options = Bulletin.aasm.states.map { |state| [t(state.name), state.name.to_s] }
+      @resource_actions = %i[show publish reject archive]
     end
 
     def show
       @bulletin = Bulletin.find params[:id]
-      @requested_actions = %i[publish reject archive]
+      @resource_actions = %i[publish reject archive]
     end
 
     def moderate
       @bulletins = Bulletin.under_moderation.order(created_at: :desc).page(params[:page])
+      @resource_actions = %i[show publish reject archive]
     end
 
     def publish

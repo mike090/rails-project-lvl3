@@ -34,7 +34,7 @@ module Web
     def show
       @bulletin = Bulletin.includes(:user, image_attachment: [:blob]).find(params[:id])
       authorize @bulletin
-      @requested_actions = %i[edit send_for_moderation archive] if bulletin_author?
+      @resource_actions = %i[edit send_for_moderation archive] if bulletin_author?
     end
 
     def edit
