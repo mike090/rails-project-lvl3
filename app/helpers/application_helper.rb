@@ -31,7 +31,8 @@ module ApplicationHelper
     link_to title, path, **options
   end
 
-  def icon_action_link(action, path,
+  def icon_action_link(action,
+                       path,
                        title: t(action),
                        http_method: ACTIONS_HTTP_METODS[action],
                        link_class: GRID_LINK_CLASS,
@@ -44,7 +45,8 @@ module ApplicationHelper
     end
   end
 
-  def button_action_link(action, path,
+  def button_action_link(action,
+                         path,
                          title: t(action),
                          http_method: ACTIONS_HTTP_METODS[action],
                          link_class: BUTTON_LINK_CLASS)
