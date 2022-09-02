@@ -33,27 +33,21 @@ module ApplicationHelper
 
   def icon_action_link(action,
                        path,
-                       # title: t(action),
-                       http_method: ACTIONS_HTTP_METODS[action],
-                       link_class: GRID_LINK_CLASS,
                        enabled: true)
-    link_class += ' disabled' unless enabled
-    content_tag :span, title: title do
-      link_to path, class: link_class, 'data-method' => http_method do
+    link_class = enabled ? GRID_LINK_CLASS : "#{GRID_LINK_CLASS} disabled"
+    content_tag :span, title: t(action) do
+      link_to path, class: link_class, 'data-method' => ACTIONS_HTTP_METODS[action] do
         content_tag :i, '', class: ACTIONS_ICONS[action]
       end
     end
   end
 
   def button_action_link(action,
-                         path,
-                         # title: t(action),
-                         http_method: ACTIONS_HTTP_METODS[action],
-                         link_class: BUTTON_LINK_CLASS)
-    link_to path, class: link_class, 'data-method' => http_method do
+                         path)
+    link_to path, class: link_class, 'data-method' => ACTIONS_HTTP_METODS[action] do
       (content_tag :span, class: 'me-2' do
         content_tag :i, '', class: ACTIONS_ICONS[action]
-      end) + title
+      end) + t(action)
     end
   end
 
