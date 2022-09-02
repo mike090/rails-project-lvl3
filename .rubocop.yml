@@ -44,4 +44,4 @@ Style/AsciiComments:
   Enabled: false
 
 Metrics/ParameterLists:
-  Enabled: false
+  Enabled: true

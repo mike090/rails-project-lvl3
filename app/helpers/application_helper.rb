@@ -33,7 +33,7 @@ module ApplicationHelper
 
   def icon_action_link(action,
                        path,
-                       title: t(action),
+                       # title: t(action),
                        http_method: ACTIONS_HTTP_METODS[action],
                        link_class: GRID_LINK_CLASS,
                        enabled: true)
@@ -47,7 +47,7 @@ module ApplicationHelper
 
   def button_action_link(action,
                          path,
-                         title: t(action),
+                         # title: t(action),
                          http_method: ACTIONS_HTTP_METODS[action],
                          link_class: BUTTON_LINK_CLASS)
     link_to path, class: link_class, 'data-method' => http_method do
