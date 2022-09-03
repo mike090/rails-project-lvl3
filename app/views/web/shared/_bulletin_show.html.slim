@@ -17,6 +17,6 @@
         div
           = "#{t('state')}: #{t(bulletin.state)}"
         div
-          - actions.select { |action| allow? action, bulletin }.each do |action, url_options|
+          - actions.select { |action| allow? action, bulletin }.each do |action|
             = button_action_link(action,
-              url_for(action: action, id: bulletin.id, only_path: true, **(url_options || {})))
+              url_for(action: action, id: bulletin.id))

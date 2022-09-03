@@ -14,5 +14,5 @@ table.table.table-borderless
         td
           - actions.each do |action, url_options|
             = icon_action_link(action,
-              url_for(action: action, id: bulletin.id, only_path: true, **(url_options || {})),
+              url_for(action: action, id: bulletin.id, **(url_options || {})),
               enabled: allow?(action, bulletin))

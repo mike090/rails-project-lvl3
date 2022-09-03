@@ -9,9 +9,9 @@ h1.h2.mb-4
           td
             = category.name
           td
-            - @resource_actions.each do |action, url_options|
+            - @resource_actions.each do |action|
               = icon_action_link(action,
-                url_for(action: action, id: category.id, only_path: true, **(url_options || {})),
+                url_for(action: action, id: category.id),
                 enabled: allow?(action, category))
 
 = paginate @categories, theme: 'bootstrap-5'

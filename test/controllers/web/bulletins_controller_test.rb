@@ -90,4 +90,11 @@ class Web::BulletinsControllerTest < ActionDispatch::IntegrationTest
     archived_bulletin.reload
     assert { archived_bulletin.archived? }
   end
+
+  test 'should show authors bulletin' do
+    bulletin = bulletins(:archived)
+    sign_in bulletin.user
+    get bulletin_path bulletin
+    assert_response :success
+  end
 end

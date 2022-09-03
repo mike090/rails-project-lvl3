@@ -44,7 +44,7 @@ module ApplicationHelper
 
   def button_action_link(action,
                          path)
-    link_to path, class: link_class, 'data-method' => ACTIONS_HTTP_METODS[action] do
+    link_to path, class: BUTTON_LINK_CLASS, 'data-method' => ACTIONS_HTTP_METODS[action] do
       (content_tag :span, class: 'me-2' do
         content_tag :i, '', class: ACTIONS_ICONS[action]
       end) + t(action)
